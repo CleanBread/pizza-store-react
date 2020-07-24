@@ -1,0 +1,16 @@
+{
+    "terminal.integrated.shell.windows": "D:\\Program Files\\Git\\bin\\bash.exe",
+    "terminal.integrated.env.windows": {
+        "CHERE_INVOKING": "1"
+        },
+        "terminal.integrated.shellArgs.windows": [
+        "-l"
+        ],
+    "prettier.tabWidth": 2,
+    "prettier.singleQuote": true,
+    "editor.formatOnSave": true,
+    "prettier.trailingComma": "all",
+    "prettier.semi": true,
+    "prettier.jsxBracketSameLine": true,
+    "prettier.printWidth": 100
+}
