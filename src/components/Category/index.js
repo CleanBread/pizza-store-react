@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import './Category.scss';
+
 const Category = ({ category }) => {
     const [currentCat, setCurrentCat] = useState('all');
 
