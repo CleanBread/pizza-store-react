@@ -9,9 +9,22 @@ const SortPopap = (props) => {
     const [isVisiblePopap, setIsVisiblePopap] = useState(false);
     const [currentCat, setCurrentCat] = useState(0);
 
-    const sortCats = ['популярности', 'цене', 'алфавиту']
+    const sortCats = [
+        {
+            name: 'популярности',
+            type: 'popular'
+        },
+        {
+            name: 'цене',
+            type: 'price'
+        },
+        {
+            name: 'алфавиту',
+            type: 'alphabet'
+        }
+    ]
 
-    const activeCatText = sortCats[currentCat];
+    const activeCatText = sortCats[currentCat].name;
 
     const sortBlockRef = useRef()
 
@@ -65,7 +78,7 @@ const SortPopap = (props) => {
                 <ul>
                     {
                         sortCats.map((item, index) => {
-                            return <li className={currentCat === index ? 'active' : ''} key={index} onClick={() => { changeCurrentCat(index) }}>{item}</li>
+                            return <li className={currentCat === index ? 'active' : ''} key={index} onClick={() => { changeCurrentCat(index) }}>{item.name}</li>
                         })
                     }
                 </ul>
