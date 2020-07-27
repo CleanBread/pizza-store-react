@@ -8,7 +8,6 @@ import './scss/app.scss';
 
 import App from './App';
 
-console.log(store.getState())
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>

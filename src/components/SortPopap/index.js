@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
 import classNames from 'classnames'
+
+import { setSortBy as setSortByAction } from '../../redux/actions/filters';
 
 import './SortPopap.scss';
 
 const SortPopap = (props) => {
+    const dispatch = useDispatch()
 
     const [isVisiblePopap, setIsVisiblePopap] = useState(false);
     const [currentCat, setCurrentCat] = useState(0);
@@ -41,6 +45,8 @@ const SortPopap = (props) => {
     const changeCurrentCat = (cat) => {
         setCurrentCat(cat)
         setIsVisiblePopap(false)
+
+        dispatch(setSortByAction(cat))
     }
 
     useEffect(() => {
