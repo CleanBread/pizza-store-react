@@ -1,15 +1,28 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Category, SortPopap, PizzaBlock } from '../components';
+import { Category, SortPopap, PizzaBlock, PizzaLoadingBlock } from '../components';
+
+import { fetchPizzas as fetchPizzasAction } from '../redux/actions/pizzas';
 
 const Home = () => {
-    const { pizzaItems, curCat } = useSelector(({ pizzas, filters }) => {
+
+    const { pizzaItems, curCat, sortBy, isLoaded } = useSelector(({ pizzas, filters }) => {
         return {
             pizzaItems: pizzas.items,
-            curCat: filters.category
+            curCat: filters.category,
+            sortBy: filters.sortBy,
+            isLoaded: pizzas.isLoaded
         }
     })
+
+    const dispatch = useDispatch()
+
+    React.useEffect(() => {
+        if (!pizzaItems.length) {
+            dispatch(fetchPizzasAction())
+        }
+    }, []);
 
     return (
         <div className="container">
@@ -19,9 +32,18 @@ const Home = () => {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-                {pizzaItems &&
+                {isLoaded ?
                     pizzaItems.filter(item => curCat === 'all' ? item : item.category === curCat)
+                        .sort((prevItem, nextItem) => {
+                            switch (sortBy) {
+                                case 'popular':
+                                    return prevItem;
+                                case 'price':
+                                    return prevItem.price - nextItem.price;
+                            }
+                        })
                         .map(item => <PizzaBlock key={item.id} {...item}></PizzaBlock>)
+                    : new Array(10).fill(0).map(item => <PizzaLoadingBlock />)
                 }
             </div>
         </div>

@@ -7,11 +7,6 @@ import './PizzaBlock.scss';
 const PizzaBlock = ({ name, imageUrl, price, sizes, types }) => {
     const [activeSize, setActiveSize] = React.useState(0);
     const [activeType, setActiveType] = React.useState(types[0]);
-    // const [curentChoose, setCurentChoose] = useState(
-    //     {
-
-    //     }
-    // );
 
     const onSelectType = (type) => {
         setActiveType(type)

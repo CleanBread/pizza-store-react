@@ -21,10 +21,6 @@ const SortPopap = (props) => {
         {
             name: 'цене',
             type: 'price'
-        },
-        {
-            name: 'алфавиту',
-            type: 'alphabet'
         }
     ]
 
@@ -46,7 +42,7 @@ const SortPopap = (props) => {
         setCurrentCat(cat)
         setIsVisiblePopap(false)
 
-        dispatch(setSortByAction(cat))
+        dispatch(setSortByAction(sortCats[cat].type))
     }
 
     useEffect(() => {
