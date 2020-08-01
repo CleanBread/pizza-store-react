@@ -33,7 +33,8 @@ const SortPopap = (props) => {
     }
 
     const outsideClick = (e) => {
-        if (!e.path.includes(sortBlockRef.current)) {
+        const path = e.path || (e.composedPath && e.composedPath())
+        if (!path.includes(sortBlockRef.current)) {
             setIsVisiblePopap(false)
         }
     }

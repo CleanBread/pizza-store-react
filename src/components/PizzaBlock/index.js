@@ -1,19 +1,40 @@
 import React from 'react';
 import classNames from 'classnames';
 import propTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addPizza as addPizzaAction } from '../../redux/actions/basket';
 
 import './PizzaBlock.scss';
 
-const PizzaBlock = ({ name, imageUrl, price, sizes, types }) => {
-    const [activeSize, setActiveSize] = React.useState(0);
-    const [activeType, setActiveType] = React.useState(types[0]);
+const PizzaBlock = ({ id, name, imageUrl, price, sizes, types }) => {
+    const dispatch = useDispatch();
 
+    const currentCount = useSelector(({ basket }) => {
+        return basket.countsItems[id] || null
+    })
+
+    const [activeSize, setActiveSize] = React.useState(sizes[0]);
+    const [activeType, setActiveType] = React.useState(types[0].id);
     const onSelectType = (type) => {
         setActiveType(type)
     }
 
     const onSelectSize = (size) => {
         setActiveSize(size)
+    }
+
+    const addPizza = () => {
+        dispatch(addPizzaAction({
+            pizza: {
+                id,
+                imageUrl,
+                name,
+                price,
+                size: activeSize,
+                type: types[activeType]
+            }
+        }))
     }
 
     return (
@@ -26,24 +47,21 @@ const PizzaBlock = ({ name, imageUrl, price, sizes, types }) => {
             <h4 className="pizza-block__title">{name}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    <li className={classNames({
-                        'active': activeType === 0 && types.includes(0),
-                        'disabled': !types.includes(0)
-                    })} onClick={() => onSelectType(0)}>тонкое</li>
-                    <li className={classNames({
-                        'active': activeType === 1 && types.includes(1),
-                        'disabled': !types.includes(1)
-                    })} onClick={() => onSelectType(1)}>традиционное</li>
+                    {types &&
+                        types.map(item => <li key={item.id} className={classNames({
+                            'active': activeType === item.id
+                        })} onClick={() => onSelectType(item.id)}>{item.name}</li>)
+                    }
                 </ul>
                 <ul>
                     {sizes &&
-                        sizes.map((item, index) => <li className={activeSize === index ? 'active' : ''} onClick={() => onSelectSize(index)} key={index}>{item} см.</li>)
+                        sizes.map((item) => <li className={activeSize === item ? 'active' : ''} onClick={() => onSelectSize(item)} key={item}>{item} см.</li>)
                     }
                 </ul>
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">от {price} ₽</div>
-                <div className="button button--outline button--add">
+                <div className="button button--outline button--add" onClick={addPizza}>
                     <svg
                         width="12"
                         height="12"
@@ -57,7 +75,9 @@ const PizzaBlock = ({ name, imageUrl, price, sizes, types }) => {
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>2</i>
+                    {currentCount &&
+                        <i>{currentCount}</i>
+                    }
                 </div>
             </div>
         </div>
@@ -69,7 +89,7 @@ PizzaBlock.propTypes = {
     imageUrl: propTypes.string.isRequired,
     price: propTypes.number.isRequired,
     sizes: propTypes.arrayOf(propTypes.number).isRequired,
-    types: propTypes.arrayOf(propTypes.number)
+    types: propTypes.arrayOf(propTypes.object)
 }
 
 PizzaBlock.defaultProps = {

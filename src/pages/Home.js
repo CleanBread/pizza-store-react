@@ -43,7 +43,7 @@ const Home = () => {
                             }
                         })
                         .map(item => <PizzaBlock key={item.id} {...item}></PizzaBlock>)
-                    : new Array(10).fill(0).map(item => <PizzaLoadingBlock />)
+                    : new Array(10).fill(0).map((item, index) => <PizzaLoadingBlock key={index} />)
                 }
             </div>
         </div>
