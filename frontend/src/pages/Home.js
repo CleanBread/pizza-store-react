@@ -37,7 +37,7 @@ const Home = () => {
                         .sort((prevItem, nextItem) => {
                             switch (sortBy) {
                                 case 'popular':
-                                    return prevItem;
+                                    return prevItem.rating - nextItem.rating;
                                 case 'price':
                                     return prevItem.price - nextItem.price;
                             }

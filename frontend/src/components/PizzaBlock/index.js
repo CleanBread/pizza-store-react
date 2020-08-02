@@ -7,11 +7,11 @@ import { addPizza as addPizzaAction } from '../../redux/actions/basket';
 
 import './PizzaBlock.scss';
 
-const PizzaBlock = ({ id, name, imageUrl, price, sizes, types }) => {
+const PizzaBlock = ({ _id, name, imageUrl, price, sizes, types }) => {
     const dispatch = useDispatch();
 
     const currentCount = useSelector(({ basket }) => {
-        return basket.countsItems[id] || null
+        return basket.countsItems[_id] || null
     })
 
     const [activeSize, setActiveSize] = React.useState(sizes[0]);
@@ -27,7 +27,7 @@ const PizzaBlock = ({ id, name, imageUrl, price, sizes, types }) => {
     const addPizza = () => {
         dispatch(addPizzaAction({
             pizza: {
-                id,
+                _id,
                 imageUrl,
                 name,
                 price,

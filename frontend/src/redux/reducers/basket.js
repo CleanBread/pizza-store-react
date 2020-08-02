@@ -6,7 +6,8 @@ const initialState = {
 }
 
 const basket = (state = initialState, action) => {
-    const id = action.payload && action.payload.pizza ? `${action.payload.pizza.id}${action.payload.pizza.size}${action.payload.pizza.type.id}` : ''
+    const id = action.payload && action.payload.pizza ? `${action.payload.pizza._id}${action.payload.pizza.size}${action.payload.pizza.type.id}` : ''
+
     switch (action.type) {
         case 'ADD_PIZZA':
 
@@ -21,7 +22,7 @@ const basket = (state = initialState, action) => {
             const currentPizzaPrice = state.totalPrice + action.payload.pizza.price;
             const currentCount = ++state.totalCount
 
-            const currentPizzasCount = state.countsItems[action.payload.pizza.id] ? ++state.countsItems[action.payload.pizza.id] : 1
+            const currentPizzasCount = state.countsItems[action.payload.pizza._id] ? ++state.countsItems[action.payload.pizza._id] : 1
 
             return {
                 ...state,
@@ -30,7 +31,7 @@ const basket = (state = initialState, action) => {
                 totalPrice: currentPizzaPrice,
                 countsItems: {
                     ...state.countsItems,
-                    [action.payload.pizza.id]: currentPizzasCount
+                    [action.payload.pizza._id]: currentPizzasCount
                 }
             };
 
@@ -41,7 +42,7 @@ const basket = (state = initialState, action) => {
             const newTotalPrice = state.totalPrice - state.items[id].count * state.items[id].pizza.price
             const newTotalCount = state.totalCount - state.items[id].count
             const currentPizzasCounts = { ...state.countsItems }
-            delete currentPizzasCounts[action.payload.pizza.id]
+            delete currentPizzasCounts[action.payload.pizza._id]
 
             delete newItems[id]
 
@@ -74,7 +75,7 @@ const basket = (state = initialState, action) => {
             const newTotalCount = --state.totalCount
             const currentPizzasCounts = {
                 ...state.countsItems,
-                [action.payload.pizza.id]: --state.countsItems[action.payload.pizza.id]
+                [action.payload.pizza._id]: --state.countsItems[action.payload.pizza._id]
             }
 
             return {
@@ -90,7 +91,7 @@ const basket = (state = initialState, action) => {
             const newTotalCount = ++state.totalCount
             const currentPizzasCounts = {
                 ...state.countsItems,
-                [action.payload.pizza.id]: ++state.countsItems[action.payload.pizza.id]
+                [action.payload.pizza._id]: ++state.countsItems[action.payload.pizza._id]
             }
 
             const newItems = {
